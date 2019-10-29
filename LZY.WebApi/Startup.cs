@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LZY.DataAccess;
+using LZY.DataAccess.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +28,24 @@ namespace LZY.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 添加 EF Core 框架，连接串在appsettings设置
+            services.AddDbContext<EntityDbContext>(d => d.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            #region 域控制器相关的依赖注入服务清单
+            //services.AddTransient<IEntityRepository<Student>, EntityRepository<Student>>();
+            #endregion
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();//指定处理cookie
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +61,8 @@ namespace LZY.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("any");
+            app.UseHttpsRedirection();//跨域
             app.UseMvc();
         }
     }
