@@ -18,4 +18,8 @@
     <ProjectReference Include="..\LZY.Model\LZY.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SqlServer\" />
+  </ItemGroup>
+
 </Project>
