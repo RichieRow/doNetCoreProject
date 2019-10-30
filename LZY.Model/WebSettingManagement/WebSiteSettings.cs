@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LZY.Model.WebSettingManagement
 {
-    class WebSiteSettings : IEntity
+   public class WebSiteSettings : IEntity
     {
         [Key]
         public Guid Id { get; set; }

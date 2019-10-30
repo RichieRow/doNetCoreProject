@@ -1,4 +1,6 @@
 ﻿using LZY.Model.ApplicationOrganization;
+using LZY.Model.Attachments;
+using LZY.Model.BusinessManegement.Audit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,11 +23,19 @@ namespace LZY.DataAccess.EntityFramework
         #region 用户与角色相关
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Department> Departments { get; set; }
         #endregion
-        /// <summary>
-        /// 生成数据库表 名称为复数
-        /// </summary>
-        //public DbSet<Student> Students { get; set; }
+       
+        
+        
+        #region 一些基础业务对象相关
+        public DbSet<AuditRecord> AuditRecords { get; set; }
+        public DbSet<BusinessFile> BusinessFiles { get; set; }
+        public DbSet<BusinessImage> BusinessImages { get; set; }
+        public DbSet<BusinessVideo> BusinessVideos { get; set; }
+        #endregion
 
 
         /// <summary>
