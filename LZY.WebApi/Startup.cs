@@ -7,7 +7,6 @@ using LZY.DataAccess.EntityFramework;
 using LZY.Model.ApplicationOrganization;
 using LZY.Model.Attachments;
 using LZY.Model.WebSettingManagement;
-using LZY.WebApi.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,13 +39,6 @@ namespace LZY.WebApi
             //services.AddIdentity<ApplicationUser, ApplicationRole>()
             //   .AddEntityFrameworkStores<EntityDbContext>()
             //   .AddDefaultTokenProviders();
-
-            //身份验证
-            services.AddIdentityServer()
-               .AddDeveloperSigningCredential()
-               .AddInMemoryApiResources(InitMemoryData.GetApiResources())
-               .AddInMemoryClients(InitMemoryData.GetClients());
-               //.AddTestUsers(InitMemoryData.GetUsers()); //添加测试用户;
 
 
             // 配置 Identity
@@ -84,7 +76,7 @@ namespace LZY.WebApi
                 config.DefaultScheme = "Bearer"; //这个是access_token的类型，获取access_token的时候返回参数中的token_type一致
             }).AddIdentityServerAuthentication(option => {
                 option.ApiName = "api"; //资源名称，认证服务注册的资源列表名称一致，
-                option.Authority = "http://localhost:56182"; //认证服务的url
+                option.Authority = "http://localhost:5000"; //认证服务的url
                 option.RequireHttpsMetadata = false; //是否启用https
 
             });
@@ -115,10 +107,6 @@ namespace LZY.WebApi
             {
                 app.UseHsts();
             }
-
-            //将IdentityServer添加到管道中。
-            app.UseIdentityServer();
-
             app.UseCors(cors);
             app.UseHttpsRedirection();//跨域
             app.UseAuthentication();
