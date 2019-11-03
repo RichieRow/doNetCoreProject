@@ -36,30 +36,30 @@ namespace LZY.WebApi
         {
             // 添加 EF Core 框架，连接串在appsettings设置
             services.AddDbContext<EntityDbContext>(d => d.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddIdentity<ApplicationUser, ApplicationRole>()
-            //   .AddEntityFrameworkStores<EntityDbContext>()
-            //   .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+               .AddEntityFrameworkStores<EntityDbContext>()
+               .AddDefaultTokenProviders();
 
 
-            // 配置 Identity
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // 密码策略的常规设置
-            //    options.Password.RequireDigit = true;            // 是否需要数字字符
-            //    options.Password.RequiredLength = 6;             // 必须的长度
-            //    options.Password.RequireNonAlphanumeric = true;  // 是否需要非拉丁字符，如%，@ 等
-            //    options.Password.RequireUppercase = false;        // 是否需要大写字符
-            //    options.Password.RequireLowercase = false;        // 是否需要小写字符
+            //配置 Identity
+            services.Configure<IdentityOptions>(options =>
+            {
+                // 密码策略的常规设置
+                options.Password.RequireDigit = true;            // 是否需要数字字符
+                options.Password.RequiredLength = 6;             // 必须的长度
+                options.Password.RequireNonAlphanumeric = true;  // 是否需要非拉丁字符，如%，@ 等
+                options.Password.RequireUppercase = false;        // 是否需要大写字符
+                options.Password.RequireLowercase = false;        // 是否需要小写字符
 
-            //    // 登录尝试锁定策略
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //    options.Lockout.MaxFailedAccessAttempts = 10;
+                // 登录尝试锁定策略
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
 
 
 
-            //    // 其它的一些设置
-            //    options.User.RequireUniqueEmail = true;
-            //});
+                //    // 其它的一些设置
+                options.User.RequireUniqueEmail = true;
+            });
             #region 域控制器相关的依赖注入服务清单
             services.AddTransient<IEntityRepository<BusinessImage>, EntityRepository<BusinessImage>>();
             services.AddTransient<IEntityRepository<BusinessFile>, EntityRepository<BusinessFile>>();
@@ -76,8 +76,8 @@ namespace LZY.WebApi
                 config.DefaultScheme = "Bearer"; //这个是access_token的类型，获取access_token的时候返回参数中的token_type一致
             }).AddIdentityServerAuthentication(option => {
                 option.ApiName = "api"; //资源名称，认证服务注册的资源列表名称一致，
-                option.Authority = "http://localhost:5000"; //认证服务的url
-                option.RequireHttpsMetadata = false; //是否启用https
+                option.Authority = "https://localhost:5000"; //认证服务的url
+                option.RequireHttpsMetadata = true; //是否启用https
 
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
