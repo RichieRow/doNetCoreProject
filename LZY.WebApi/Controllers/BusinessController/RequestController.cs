@@ -16,7 +16,7 @@ namespace LZY.WebApi.Controllers
         public string Post(string id,string pwd)
         {
          
-            var diso = DiscoveryClient.GetAsync("http://localhost:5000/").Result;
+            var diso = DiscoveryClient.GetAsync("https://localhost:44332/").Result;
             if (diso.IsError)
             {
                 return diso.Error;

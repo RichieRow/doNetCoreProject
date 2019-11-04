@@ -13,7 +13,7 @@ namespace LZY.DataAccess.EntityFramework
     /// 针对 IEntityRepository 的具体实现
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EntityRepository<T> : IEntityRepository<T> where T : class, IEntityBase, new()
+    public class EntityRepository<T> : IEntityRepository<T> where T : class, IEntity, new()
     {
         public EntityDbContext EntitiesContext { get; set; }
         readonly EntityDbContext _EntitiesContext;

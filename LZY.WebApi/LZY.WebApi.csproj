@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json~RFf8d54b.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\UserController\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

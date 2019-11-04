@@ -13,7 +13,7 @@ namespace LZY.DataAccess
     /// 统一的数据访问接口规范
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IEntityRepository<T> where T : class, IEntityBase, new()
+    public interface IEntityRepository<T> where T : class, IEntity, new()
     {
         EntityDbContext EntitiesContext { get; set; }
 

@@ -19,6 +19,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using LZY.DataAccess.SqlServer;
+using LZY.Model.ApplicationManagement;
 
 namespace LZY.WebApi
 {
@@ -61,10 +63,15 @@ namespace LZY.WebApi
                 options.User.RequireUniqueEmail = true;
             });
             #region 域控制器相关的依赖注入服务清单
+            services.AddTransient<IEntityRepository<SystemWorkPlace>, EntityRepository<SystemWorkPlace>>();
+            services.AddTransient<IEntityRepository<WorkPlaceCategory>, EntityRepository<WorkPlaceCategory>>();
             services.AddTransient<IEntityRepository<BusinessImage>, EntityRepository<BusinessImage>>();
             services.AddTransient<IEntityRepository<BusinessFile>, EntityRepository<BusinessFile>>();
             services.AddTransient<IEntityRepository<BusinessVideo>, EntityRepository<BusinessVideo>>();
             services.AddTransient<IEntityRepository<WebSiteSettings>, EntityRepository<WebSiteSettings>>();
+            services.AddTransient<IEntityRepository<WebIdentityServer>, EntityRepository<WebIdentityServer>>();
+            services.AddTransient<IEntityRepository<RsaKey>, EntityRepository<RsaKey>>();
+
             services.AddTransient<IEntityRepository<Person>, EntityRepository<Person>>();
             services.AddTransient<IEntityRepository<Department>, EntityRepository<Department>>();
 
@@ -76,7 +83,7 @@ namespace LZY.WebApi
                 config.DefaultScheme = "Bearer"; //这个是access_token的类型，获取access_token的时候返回参数中的token_type一致
             }).AddIdentityServerAuthentication(option => {
                 option.ApiName = "api"; //资源名称，认证服务注册的资源列表名称一致，
-                option.Authority = "https://localhost:5000"; //认证服务的url
+                option.Authority = "https://localhost:44332"; //认证服务的url
                 option.RequireHttpsMetadata = true; //是否启用https
 
             });
@@ -96,7 +103,7 @@ namespace LZY.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, EntityDbContext context)
         {
 
             if (env.IsDevelopment())
@@ -111,6 +118,7 @@ namespace LZY.WebApi
             app.UseHttpsRedirection();//跨域
             app.UseAuthentication();
             app.UseMvc();
+            DbInitializer.Initialize(context);
         }
     }
 }

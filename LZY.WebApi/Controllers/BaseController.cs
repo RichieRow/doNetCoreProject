@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LZY.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [EnableCors("any")]
     public class BaseController : ControllerBase

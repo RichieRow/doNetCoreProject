@@ -22,6 +22,7 @@ namespace LZY.Model.ApplicationOrganization
         public virtual BusinessImage Avatar { get; set; }  // 用户头像
         public string UserAddress { get; set; }               // 联系地址
         public string DistributionAddress { get; set; }       // 配送地址
+        public string VXopenId { get; set; }//微信openid
 
         public ApplicationUser() : base()
         {

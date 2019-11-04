@@ -1,6 +1,8 @@
-﻿using LZY.Model.ApplicationOrganization;
+﻿using LZY.Model.ApplicationManagement;
+using LZY.Model.ApplicationOrganization;
 using LZY.Model.Attachments;
 using LZY.Model.BusinessManegement.Audit;
+using LZY.Model.WebSettingManagement;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,14 +29,22 @@ namespace LZY.DataAccess.EntityFramework
         public DbSet<Person> Persons { get; set; }
         public DbSet<Department> Departments { get; set; }
         #endregion
-       
-        
-        
+
+        #region 用户工作区与菜单相关
+        public DbSet<SystemWorkPlace> SystemWorkPlaces { get; set; }
+        public DbSet<WorkPlaceCategory> WorkPlaceCategory { get; set; }
+        #endregion
+
         #region 一些基础业务对象相关
         public DbSet<AuditRecord> AuditRecords { get; set; }
         public DbSet<BusinessFile> BusinessFiles { get; set; }
         public DbSet<BusinessImage> BusinessImages { get; set; }
         public DbSet<BusinessVideo> BusinessVideos { get; set; }
+        public DbSet<WebSiteSettings> WebSiteSittings { get; set; }
+        public DbSet<WebIdentityServer> WebIdentityServers { get; set; }
+        public DbSet<RsaKey> RsaKeys { get; set; }
+        
+
         #endregion
 
 

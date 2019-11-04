@@ -45,6 +45,7 @@ namespace LZY.Model.ApplicationOrganization
 
         public virtual Department Department { get; set; }                  // 所属部门
         public virtual BusinessImage Avatar { get; set; }
+        public string VXopenId { get; set; } //微信openid
 
         public Person()
         {
